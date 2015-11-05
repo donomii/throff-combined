@@ -1,0 +1,19 @@
+ITERATE [
+  WHEN AND
+        LESSTHAN $x $y
+        EQUAL $x SUB SUM properdiv $y $y
+        [
+            PRINTLN A[ $x $y ]A
+        ]
+  BIND $y => SUB  SWAP  $x  SUM properdiv $x 
+  ARG $x =>
+] RANGE 10 20000
+
+
+DEFINE SUM => [ FOLD [ ADD ] 0 ]
+
+
+DEFINE properdiv => [
+    FILTER [ EQUAL 0 MODULO num ] RANGE 1 num
+    ARG num =>
+]

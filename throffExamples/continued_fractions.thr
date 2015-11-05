@@ -1,0 +1,47 @@
+PRINTLN calc2 [ fPi ] 200        EMIT [ Pi : ]
+PRINTLN calc2 [ fnapier ] 200    EMIT [ Napier : ]
+PRINTLN calc2 [ fSqrt2 ] 200     EMIT [ Square Root : ]
+
+DEFINE calc2 => [
+    ADD DROP CALL func 0.00000
+    FOLD [
+            DIVIDE b  ADD accum a
+            BIND a => BIND b => CALL func n
+            ARG accum =>
+            ARG n =>
+        ]
+        0.0000000000000
+        REVERSE RANGE 1 ADD 1
+    ARG func =>
+]
+
+DEFINE fPi => [
+    MULT
+        SUB MULT 2.000 n 1.000
+        SUB MULT 2.000 n 1.000
+    IF LESSTHAN 0 n
+        6.0000000
+        3.0000000
+    ARG n =>
+]
+
+
+DEFINE fSqrt2 => [
+    1.000000000000000000000000
+    IF LESSTHAN 0  n
+        [ 2.000000000000000000 ]
+        [ 1.000000000000000000 ]
+  ARG n =>
+]
+
+DEFINE fnapier => [
+    IF LESSTHAN 1.0000000000 n
+        SUB n 1.00000000000000
+        1.00000000000000000
+    IF LESSTHAN 0.0000000000000 n
+        n
+        2.000000000000000000
+    ARG n =>
+]
+
+SAFETYON
