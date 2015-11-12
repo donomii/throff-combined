@@ -1,0 +1,46 @@
+CATCH [ PRINTLN EMIT [ In handler, with continuation result : ]  ] [ 
+    PRINTLN [ NEVER REACHED ]
+    THROW ERROR_CAUGHT!
+    PRINTLN [ Throwing error... ]
+]
+
+PRINTLN [ Testing throw ]
+
+CATCH [ PRINTLN [ IN HANDLER, CANNOT BE REACHED ]  ] [ PRINTLN [ ] DUMP ERRORHANDLER EMIT [ IN CALL, ERRORHANDLER IS ] PRINTLN [ INSTALLDYNA WORKED ] ]
+
+COMMENT [
+
+DEFINE THROW => [
+    ACTIVATE/CC ERRORHANDLER A[ TRUE  MSG ]A
+    ARG MSG =>
+]
+
+DEFINE CATCH => [
+    IF HANDLER [
+        CALL ERRLAMBDA MSG 
+    ] [ ]
+
+    BIND MSG => CAR CDR RET
+    BIND HANDLER => CAR RET
+    BIND RET =>
+    PRINTLN DUP
+    PRINTLN [ BAck in catch ]
+    CALL/CC [
+        INSTALLDYNA CC ->FUNC  [ A[ FALSE AAAA AAAA  ]A CALL ALAMBDA ]
+        ARG CC =>
+    ]
+    ARG ALAMBDA =>
+    ARG ERRLAMBDA =>
+]
+
+]
+
+
+
+CALL/CC [
+    ACTIVATE/CC
+    PRINTLN DUP
+    EMIT [ CALLED WITH CONTINUATION : ]
+]
+
+PRINTLN [ Starting error demonstration ]
