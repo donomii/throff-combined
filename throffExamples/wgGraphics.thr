@@ -1,16 +1,25 @@
 
 
-WG.START
+WG.START 8500
 
 
-	
-DEFINE WGCALLBACK => THIN [ 
-			PRINTLN HELLO
-			ITERATE [ WG.SETPOINT DUP SWAP  WHITE   ] RANGE I 600
+DEFINE WGCALLBACK => THIN [
+			wg.FillStringAt [ Hello
+			wg.CloseAndFill
+			wg.LineTo 800 I
+			wg.MoveTo 0 0
+			WG.TEST
 			WG.CLEAR BLACK
-			PRINTLN I
 			REBIND I => ADD 1 I
-			]
+	
+ ] 100 100
+			wg.CloseAndFill
+			wg.LineTo 800 I
+			wg.MoveTo 0 0
+			WG.TEST
+			WG.CLEAR BLACK
+			REBIND I => ADD 1 I
+		]
 
 BIND WHITE => RGBA 255 255 255 255
 BIND BLACK => RGBA 0 0 0 0
