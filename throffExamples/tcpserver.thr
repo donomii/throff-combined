@@ -1,15 +1,22 @@
-[ This is a remote execution server.  Connect via telnet to port 2000 and enter some commands. ] 
+[ This is a remote execution server.  Connect via telnet to port 2000 and enter some commands. ]
 
-TCPSERVER 0.0.0.0 2000 [ HANDLER ]
+TCPSERVER 0.0.0.0 2000 [ START ]
 
 DEFINE HANDLER => [
-    PRINTLN [ YOU SHOULD NEVER SEE THIS ]
     HANDLER C
     RUNSTRING INPUT ENVIRONMENTOF [ THIS ]
     PRINTLN A[ [ Received input: ] INPUT ]A
     BIND INPUT READSOCKETLINE C
-    PRINTLN [ STARTING HANDLER ]
+    PRINTSOCKET A[ CRLF READY> ]A C
+    PRINTSOCKET CLEAROUTPUT C
+    EMIT DUP
     DEFINE ECHO => [ PRINTSOCKET CRLF  C  PRINTSOCKET SWAP C ]
+    : C ]
+
+DEFINE START => [
+    HANDLER C
+    PRINTSOCKET CRLF C
+    PRINTSOCKET [ Welcome to Throff v0.1 ] C
     : C ]
 
 
