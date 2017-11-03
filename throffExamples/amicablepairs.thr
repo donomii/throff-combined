@@ -17,3 +17,5 @@ DEFINE properdiv => [
     FILTER [ EQUAL 0 MODULO num ] RANGE 1 num
     ARG num =>
 ]
+p [ This also makes a great stress test for the numerical system ] CRLF ;
+p [ Calculating amicable pairs.  The divisors of one sum to the other. ] CRLF ;
