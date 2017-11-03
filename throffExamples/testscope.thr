@@ -1,17 +1,24 @@
-
-
-p Total: TOK  TOTAL ;
+p [ 25 * 51 : ] MULT 25 51 CRLF ;
+p [ Adding 1 .. 50 using MATHEMATICS ] CRLF ;
+p [ Fold: ] TOTAL CRLF CRLF ;
 
 REBIND TOTAL => FOLD [ ADD ] 0 RANGE 1 50
 
-p Total: TOK TOTAL ;
+p [ Adding 1 .. 50 using FOLD ] CRLF ;
+
+p [ Iterate thin: ] TOTAL CRLF CRLF ;
 
 ITERATE THIN [ 
+	p [ I: ] I   [ TOTAL: ] TOTAL CRLF ;
 	REBIND TOTAL => ADD  I  TOTAL
 	REBIND I =>
 	] RANGE 1 50
 	
+p [ Adding 1 .. 50 using  ITERATE THIN ] CRLF ;
 BIND I => 0
 BIND TOTAL => 0
 
+p [ Setting I and TOTAL to 0 ] CRLF ;
 SAFETYON
+
+p [ Testing Throff scoping rules ] CRLF ;
