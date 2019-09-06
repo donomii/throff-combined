@@ -1,0 +1,11 @@
+language: go
+ 
+go:
+  - "1.7"
+  - master
+before_install:
+- go get github.com/donomii/throff
+- go build github.com/donomii/throff
+
+script:
+ - throff memory.thr
