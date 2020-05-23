@@ -1,0 +1,24 @@
+REPEAT 1000000 [ 
+		
+		IF LESSTHAN LENGTH page 1 [ ]
+		[
+			EXEC DBPAGES [ 
+				INSERT INTO pages ( url, data, fetched ) VALUES (?,?,?); ] 
+					A[	
+						GETHASH url reshash
+						page
+						TIMESEC
+					]A
+		]
+		
+		BIND page => GETWWW GETHASH url reshash
+		PRINTLN GETHASH url reshash
+		
+		BIND reshash => NEXTROW RESULT  
+		]
+
+EXEC DBPAGES [ CREATE TABLE pages ( url text UNIQUE, data text NOT NULL, fetched text NOT NULL ) ] [ ]
+BIND DBPAGES OPENSQLITE H:\reddit\reddit-pagecache.sqlite
+
+BIND RESULT QUERY DB [ SELECT id,title,ups,url FROM POSTS; ]
+BIND DB OPENSQLITE H:\reddit\reddit-posts.sqlite
