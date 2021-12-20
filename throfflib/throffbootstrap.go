@@ -205,11 +205,11 @@ DEFINE AND => [ IF EQUAL A B [ IF EQUAL A TRUE TRUE FALSE ] FALSE : B : A ]
 
 DEFINE PROMISE => [
         ->FUNC [
-                VAL
+                PROMVAL
                 WHEN NOT DONE
                         THIN [
 				REBIND F => FALSE
-                                REBIND VAL => F
+                                REBIND PROMVAL => F
                                 REBIND DONE => TRUE
                         ]
         ]
@@ -219,10 +219,10 @@ DEFINE PROMISE => [
 DEFINE CALLA => [
     CALL [
         ->FUNC THIN [
-                VAL
+                CALLAVAL
                 WHEN NOT EQUAL DONE 1
                         THIN [
-                                REBIND VAL => READQ RQ
+                                REBIND CALLAVAL => READQ RQ
                                 REBIND DONE => 1
                                 COMMENT [ DUMP RQ
                                 PRINTLN A[ !!!!!! [ CALLA READING RETURN QUEUE ] URL !!!!!!! ]A ]
@@ -230,14 +230,14 @@ DEFINE CALLA => [
         ]
         REBIND RQ => RQ
         REBIND DONE => DONE
-        REBIND VAL => VAL
+        REBIND CALLAVAL => CALLAVAL
     ]
     WRITEQ AC H[ FARG => URL RET => RQ ]H
     COMMENT [ DUMP AC
     PRINTLN A[ [ CALLA WRITING TO QUEUE ] URL ]A ]
     BIND RQ => NEWQUEUE
     BIND DONE => 0
-    BIND VAL => FALSE
+    BIND CALLAVAL => FALSE
     BIND URL =>
     BIND AC =>
 ]
@@ -321,7 +321,7 @@ DEFINE WITA =>   MACRO [
 
 	]  with_NAMES
 
-	d binding > with_NAMES <  from hash > with_ANARRAY < ;
+	d binding  with_NAMES   from hash  with_ANARRAY  ;
 
 	BIND with_INDEX => 0
 	BIND with_N => WHOOPS
@@ -343,7 +343,7 @@ DEFINE WITH =>   MACRO [
 
 	]  with_NAMES
 
-	d binding > with_NAMES <  from hash > with_AHASH < ;
+	d binding  with_NAMES   from hash  with_AHASH  ;
 
 	BIND with_N => WHOOPS
 	ARG with_AHASH =>
@@ -752,8 +752,8 @@ DEFINE RANGE => [
 
 DEFINE INVERTHASH => [
 	ITERATE2 [
-		SETHASH VAL KEY NEWHASH
-		: KEY => : VAL =>
+		SETHASH INVHVAL KEY NEWHASH
+		: KEY => : INVHVAL =>
 	]
 ]
 
@@ -934,12 +934,12 @@ DEFINE OF => [
 
 TESTBLOCK [
 	TEST KEY pages 	[ HASHITERATE key  ]
-	TEST VAL 132 	[ HASHITERATE value ]
+	TEST HVAL 132 	[ HASHITERATE value ]
 
-	HASHITERATE  bookdata THIN [  REBIND VAL => REBIND KEY => ]
+	HASHITERATE  bookdata THIN [  REBIND HVAL => REBIND KEY => ]
 
 	: KEY => FAIL
-	: VAL => FAIL
+	: HVAL => FAIL
 
 
 	: bookdata => SETHASH pages 132 NEWHASH
@@ -1271,15 +1271,15 @@ TESTBLOCK [
 ]
 DEFINE A[RECURSE => [
 
-	IF EQUAL ->STRING ]A TOK ->STRING GETFUNCTION VAL TOK
+	IF EQUAL ->STRING ]A TOK ->STRING GETFUNCTION ARECVAL TOK
 		[ ARR  ]
 		[
 			A[RECURSE ARR
-			REBIND ARR => ARRAYPUSH ARR GETFUNCTION VAL TOK
+			REBIND ARR => ARRAYPUSH ARR GETFUNCTION ARECVAL TOK
 		]
 
 
-	ARG VAL =>
+	ARG ARECVAL =>
 	ARG ARR =>
 ]
 
@@ -1311,15 +1311,15 @@ BIND ) => ->STRING ) TOK
 
 DEFINE <RECURSE => [
 
-	IF EQUAL ->STRING > TOK ->STRING GETFUNCTION VAL TOK
+	IF EQUAL ->STRING > TOK ->STRING GETFUNCTION ARECVAL TOK
 		[ ARR  ]
 		[
 			<RECURSE ARR
-			REBIND ARR => ARRAYPUSH ARR GETFUNCTION VAL TOK
+			REBIND ARR => ARRAYPUSH ARR GETFUNCTION ARECVAL TOK
 		]
 
 
-	ARG VAL =>
+	ARG ARECVAL =>
 	ARG ARR =>
 ]
 DEFINE < => [ <RECURSE NEWARRAY ]
@@ -1406,12 +1406,12 @@ TESTBLOCK [
 ]
 
 DEFINE WHEN => [
-	IF CALL VAL
+	IF CALL WHENVAL
 		[ CALL ACTION ]
 		[ ]
 
 		: ACTION TOK
-		: VAL TOK
+		: WHENVAL TOK
 ]
 
 COMMENT [
