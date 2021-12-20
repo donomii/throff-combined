@@ -1,0 +1,10 @@
+COMMENT [
+
+Runs some simple commands to check that Throff isn't leaking memory 
+
+]
+
+GETLINE
+REPEAT 10000000 [
+	PRINTLN ..........
+]

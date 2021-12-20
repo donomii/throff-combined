@@ -1,0 +1,190 @@
+.S
+STATEMENT print_histograms [
+	printHisto ->STRING [ Hits per page ] GETHASH paths TOK counters
+	printHisto ->STRING [ Hits per date ] GETHASH dates TOK counters
+	printHisto ->STRING [ Hits per IP address ] GETHASH ips TOK counters
+]
+
+PRINTLN [ Printing histograms ]
+
+
+ 
+STATEMENT [ read log file ] [
+	CLOSEFILE f
+	
+	BIND counters => RECURSEFILE  reader H[ ips => H[ ]H dates => H[ ]H paths => H[ ]H ]H 0
+]
+
+
+PRINTLN GETFUNCTION RECURSEFILE TOK
+PRINTLN [ Parsing file ]
+
+BIND f => BIND reader => OPENFILE apache.log
+
+
+
+PRINTLN [ Opening apache.log ]
+
+
+
+
+
+BIND printHisto => ->FUNC [
+	
+	p ;
+	p ------------- ;
+
+	ITERATE [ 
+		PRINTLN [ ]
+		REPEAT LN VAL [ EMIT * ]
+		EMIT SPACE EMIT KEY
+		: VAL => GETHASH KEY counters
+		: KEY =>
+
+	] sortedData
+	
+	
+	
+	
+	BIND sortedData =>  MERGESORT [ LESSTHAN 
+									GETHASH A counters
+									GETHASH B counters
+									: A => : B => 
+								]  KEYS counters
+	p ============================= ;
+	
+	p Histogram: title ;
+	ARG counters =>
+	ARG title =>
+	
+	
+
+]
+
+BIND RECURSEFILE => ->FUNC THIN [
+
+	IF NOT EQUAL ->STRING LINE ->STRING FALSE TOK  THIN [
+		RECURSEFILE FHANDLE H[ ips => ips dates => dates paths => paths ]H ADD 1 COUNT
+		
+		STATEMENT [ print intermediate counts ] [
+		IF EQUAL 2  MODULO COUNT 100  THIN [
+			printHisto ->STRING [ Hits per page ] paths
+			PRINTLN A[ Unique paths: LENGTH KEYS paths ]A
+			PRINTLN A[ DIVIDE 
+			COUNT
+				elapsed
+				 
+			lines per second ]A
+			PRINTLN A[ Lines processed: COUNT in  elapsed seconds ]A
+
+			: elapsed => SUB TIMESEC starttime 
+		] THIN [ DROP 1 ]
+		]
+		
+
+		
+		STATEMENT [ set dates ] [
+
+		REBIND ips => SETHASH  
+			ip
+			ADD 1 GETHASH ip ips
+			ips
+
+			
+		
+		REBIND dates => SETHASH  
+			date
+			ADD 1 GETHASH date dates
+			dates
+			
+
+		REBIND paths => SETHASH  
+			path
+			ADD 1 GETHASH path paths
+			paths
+			
+		]
+		
+		
+		
+		
+		
+		STATEMENT [ bind log data into namespace ] [
+
+			BIND ip => PAD-RIGHT 16 GETHASH IP LOG
+			
+			BIND date => SLICE-STRING 1 ADD -1 LENGTH DUP GETHASH DATE LOG
+			BIND path => PAD-RIGHT 40 GETARRAY 1 request_bits
+			
+			BIND request_bits => SPLIT GETHASH REQUEST => LOG SPACE 3
+		]
+		
+		
+		STATEMENT [ name log data ] [
+			
+			
+			BIND LOG => H[ 
+			
+				IP 	  => GETARRAY 0 STRS
+				BLAH  => GETARRAY 1 STRS
+				BLAH1 => GETARRAY 2 STRS
+				DATE  => GETARRAY 3 STRS
+				TIMEZONE => GETARRAY 4 STRS
+				REQUEST => GETARRAY 5 STRS
+				
+			
+			]H
+		]
+		
+		BIND STRS => SPLIT LINE SPACE 6
+	]
+	[ 
+		returns H[ ips => ips dates => dates paths => paths ]H
+		PRINTLN ->STRING [ END OF FILE ] ]
+	
+	
+
+	BIND LINE => READFILELINE FHANDLE
+	
+	p bound .paths are paths ,  counters are COUNTERS ;
+	
+	WITH A[ ips dates paths ]A FROM COUNTERS
+	
+	p Starting recursefile with counters COUNTERS and FHANDLE  ;
+	
+	
+	
+	REBIND COUNT => 
+	REBIND COUNTERS =>
+	
+	REBIND FHANDLE => 
+	PRINTLN HELLO
+]
+
+BIND FHANDLE FALSE
+BIND COUNTERS FALSE
+BIND COUNT FALSE
+
+
+
+BIND PAD-RIGHT => ->FUNC [  returns STR
+
+	ITERATE THIN [
+		REBIND STR => STRING-CONCATENATE STR SPACE
+		DROP
+	] RANGE 0 SUB SIZE LENGTH STR
+
+	
+	ARG STR =>
+	ARG SIZE =>
+]
+
+
+ 
+BIND starttime => TIMESEC
+BIND ipcounters => H[ ]H
+BIND datecounters => H[ ]H
+
+
+
+p Starting www report ;
