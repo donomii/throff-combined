@@ -1,0 +1,60 @@
+EXIT/CODE IF EQUAL count 5 0 1
+PRINTLN [ Finished foldtree test ]
+BIND count FOLDTREE [ ADD 1 DROP  ] 1 A[ A B  [ C ]  A[ a b ]A ]A
+PRINTLN [ Starting foldtree test ]
+PRINTLN [ Finished treewalk test ]
+TREEWALK [ EMIT  ] A[  A   B  [ C ]  A[ a b ]A ]A
+PRINTLN [ Starting treewalk test ]
+
+
+DEFINE FOLDTREE => [
+  CASE A[
+   ... EQUAL GETTYPE tree [ HASH ]   [
+        FOLDHASH [ FOLDTREE func ] carryover tree
+	    ]
+
+   ... EQUAL GETTYPE tree [ ARRAY ]  [
+	    FOLD [ FOLDTREE func  ] carryover tree
+	    ]
+
+   ... DEFAULT [
+	    CALL func carryover tree
+        ]
+
+  ]A
+  COMMENT [ 
+  p type is GETTYPE tree CRLF ;
+  p Starting treewalk on tree CRLF ;
+  ]
+  ARG tree
+  ARG carryover
+  ARG func
+]
+
+DEFINE TREEWALK => [
+  CASE A[
+   EQUAL GETTYPE tree [ HASH ]   ... [
+   EMIT  } TOK
+    HASHITERATE [ TREEWALK func  ] tree
+	
+	EMIT  { TOK
+	]
+   EQUAL GETTYPE tree [ ARRAY ]  ... [
+    EMIT  \] TOK
+	ITERATE [ TREEWALK func  ] tree
+	EMIT  \[ TOK 
+	
+	]
+   DEFAULT ... [
+	CALL func tree
+	
+    ]
+  ]A
+  COMMENT [ 
+  p type is GETTYPE tree CRLF ;
+  p Starting treewalk on tree CRLF ;
+  ]
+  ARG tree
+  ARG func
+]
+

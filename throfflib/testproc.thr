@@ -1,0 +1,6 @@
+PRINTLN CMDSTDOUTSTDERR [ C:\Windows\system32\cmd.exe /c dir | grep exe ]
+PRINTLN CMDSTDOUTSTDERR [ wget -O- http://google.com ]
+
+PRINTLN OS
+
+DROP SUBSHELL [ dir | grep exe ]
