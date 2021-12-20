@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/abadojack/whatlanggo"
-	"github.com/donomii/throfflib"
+	"../throfflib"
 )
 
 //_ "net/http/pprof"

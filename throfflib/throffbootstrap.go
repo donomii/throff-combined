@@ -13,7 +13,9 @@ func BootStrapString() string {
 		ARG next =>
 	]
 
-	[ arg defines a variable in the current lexical scope.  Used at the end of functions, it is effectively the argument list for the function. ]
+	COMMENT [
+	COMMENT [ arg defines a variable in the current lexical scope.  Used at the end of functions, it is effectively the argument list for the function. ]
+
 	DEFINE arg => MACRO [
 	IF EQUAL arg_value [ ;> ] 
 		THEN [ INTERPERROR A[ [ Invalid number of arguments.  You did not provide enough arguments to the function: ] THISNAME ]A ]
@@ -21,6 +23,7 @@ func BootStrapString() string {
 
 		ARG arg_value =>
 		ARG arg_name =>
+		]
 	]
 
 	DEFINE [] => [ [ ] ]
@@ -571,8 +574,6 @@ TESTBLOCK [
 
 
 DEFINE MERGE => [
-
-
 	IF LESSTHAN 0 LENGTH L1 THIN [
 		IF LESSTHAN 0 LENGTH L2 THIN [
 			MERGE GETFUNCTION MFUNC TOK L1 L2 ACCUM
@@ -1153,12 +1154,11 @@ DEFINE MAP => [
 	COUNTDOWN2ZERO
 	SUB LENGTH ARRAY1 1 THIN [
 		REBIND OUTPUT TOK ARRAYPUSH OUTPUT
-			CALL MFUNC GETARRAY  SUB SUB LENGTH ARRAY1 I 1 ARRAY1
+		CALL MFUNC GETARRAY  SUB SUB LENGTH ARRAY1 I 1 ARRAY1
 		REBIND I TOK
-
 	]
 
-
+	BIND NUMITEMS SUB LENGTH ARRAY1 1
 	BIND I => 0
 	ARG OUTPUT => NEWARRAY
 
@@ -1290,6 +1290,7 @@ BIND ]A => ->STRING ]A TOK
 
 
 
+COMMENT [
 
 DEFINE (RECURSE => [
 
@@ -1306,7 +1307,7 @@ DEFINE (RECURSE => [
 ]
 DEFINE ( => [ (RECURSE NEWARRAY ]
 BIND ) => ->STRING ) TOK
-
+]
 
 DEFINE <RECURSE => [
 
@@ -1751,7 +1752,7 @@ COMMENT [ LOADING STANDARD LIBRARY .... ]
 : ->FUNC TOK SETTYPE CODE TOK [ SETTYPE CODE TOK ]
 
 
-: RUNTESTS TOK FALSE
+: RUNTESTS TOK TRUE
 
 : FALSE TOK EQUAL 0 1
 : TRUE TOK EQUAL 1 1
