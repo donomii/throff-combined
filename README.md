@@ -48,5 +48,5 @@ Throff is a dynamically typed, late binding, homoiconic, concatenative programmi
 
 Everything is a function, even language constructs like IF and FOR, which can be replaced and extended with your own versions.  It uses immutable semantics wherever possible to provide safe threading and continuations.  There is almost no lexer/tokeniser, and no parser in the traditional sense.  Commands are fed directly into the engine to be executed.  The programs are written _backwards_. 
 
-There are many examples in the [examples](examples/) and [rosetta](rosetta/) directories.
+There are many examples in the [examples](throff/examples/) and [rosetta](throff/rosetta/) directories.
 
