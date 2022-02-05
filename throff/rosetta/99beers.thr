@@ -1,8 +1,10 @@
 [ ]	ITERATE [ PRINTLN
-			A[ X plural A[ bottle X ]A of beer on the wall, X plural A[  bottle X ]A of beer.  Take one down, pass it round, SUB X 1 plural A[ bottle SUB X 1 ]A  of beer on the wall. ]A
+			A[ X plural bottle X of beer on the wall, X plural  bottle X of beer.  Take one down, pass it round, SUB X 1 plural bottle SUB X 1  of beer on the wall. ]A
 			: X ADD1 
 		] REVERSE IOTA 100
 
-DEFINE plural => [ word number ] [
-IF EQUAL number 1 [ word ] [ STRING-CONCATENATE word s ]
+DEFINE plural => [
+	IF EQUAL number 1 [ word ] [ STRING-CONCATENATE word s ]
+	ARG number 
+	ARG word
 ]
