@@ -4,7 +4,7 @@
 
 A programming language that started as an improved Forth, and got out of control.  Has lexical scoping, continuations, effective tail calls and macros.  throff runs on a custom 3-stack engine. 
 
-throff was an experiment in creating a small core and building the language up to a fully featured programming language.  This was successful, but there are already meany fully featured programming languages and this one doesn't add anything particularily new.
+throff was an experiment in creating a small core and building the language up to a fully featured programming language.  This was successful, but there are already many fully featured programming languages and this one doesn't add anything particularily new.
 
 View the [manual](throffmain/README.md).
 
