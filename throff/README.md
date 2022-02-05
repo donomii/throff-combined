@@ -607,11 +607,11 @@ Divides two numbers
 	1.11111
 	
 
-#### MODULUS number number -> number
+#### MODULO number number -> number
 
-Returns a modulus b
+Returns a modulo b
 
-	MODULUS 100000 3
+	MODULO 100000 3
 	1
 
 #### LN number -> number

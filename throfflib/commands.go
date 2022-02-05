@@ -1053,7 +1053,7 @@ func MakeEngine() *Engine {
 		return ne
 	}))
 
-	e = add(e, "MODULUS", NewCode("MODULUS", 1, 0, 0, func(ne *Engine, c *Thingy) *Engine {
+	e = add(e, "MODULO", NewCode("MODULO", 1, 0, 0, func(ne *Engine, c *Thingy) *Engine {
 		var el, el1 *Thingy
 		el, ne.dataStack = popStack(ne.dataStack)
 		el1, ne.dataStack = popStack(ne.dataStack)
@@ -1067,7 +1067,7 @@ func MakeEngine() *Engine {
 		return ne
 	}))
 
-	e = add(e, "MODULUSI", NewCode("MODULUS", 1, 0, 0, func(ne *Engine, c *Thingy) *Engine {
+	e = add(e, "MODULOI", NewCode("MODULOI", 1, 0, 0, func(ne *Engine, c *Thingy) *Engine {
 		var el, el1 *Thingy
 		var ShutTheFuckUpAndDoTheCalculation *big.Int
 		el, ne.dataStack = popStack(ne.dataStack)
